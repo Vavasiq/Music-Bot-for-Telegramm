@@ -2,42 +2,49 @@ import telebot
 import re
 from pytube import YouTube
 import shutil
+import os
 
 TOKEN = '6261451109:AAEt3IUlWpFmUfnVRl0s-pxJm_cAQ132p-k'
 bot = telebot.TeleBot(TOKEN)
 
+
 @bot.message_handler(commands=['start'])
 def start_message(message):
-  bot.send_message(message.chat.id, "Hello")
-#Вова
-def get_music(link): 
-  yt = YouTube(link) 
-  streams = yt.streams
-  audio = streams.filter(only_audio=True).desc().first()
-  audio.download("Music") 
-  
-def delete_music(path):
-  shutil.rmtree(path)
-  
-get_music('https://youtu.be/fNFzfwLM72c')
+    bot.send_message(message.chat.id, "Hello")
 
 
-
-#Игорь
+# Игорь
 @bot.message_handler(func=lambda message: True)
-def answer(message_link):
-    if match_regex(message_link.text):
-	    bot.send_message(message_link.chat.id, 'Вызываю метод Вовы')
-    else:
-      bot.send_message(message_link.chat.id, 'It is not a youtube link')
-      
-#Игорь
-def match_regex(message_text):
-    p = re.compile('^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$')
-    if p.match(message_text) == None:
+def answer(user_message):
+  if is_youtube_link(user_message.text):
+    bot.send_message(user_message.chat.id, 'Качаю')
+    get_music(user_message.text)
+    send_music(user_message.text, user_message)
+  else:
+        bot.send_message(user_message.chat.id, 'It is not a youtube link')
+
+# Игорь
+def is_youtube_link(user_message):
+    pattern = re.compile('^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$')
+    if pattern.match(user_message) == None:
         return False
     else:
         return True
-  
+
+# Вова
+def get_music(link):
+    yt = YouTube(link)
+    streams = yt.streams
+    audio = streams.filter(only_audio=True).desc().first()
+    audio.download("Music")
+
+def send_music(link, user_message):
+    yt = YouTube(link)
+    audio = open(f'Music/{yt.title}.webm', 'rb')
+    bot.send_audio(user_message.chat.id, audio)
+
+# Вова
+def delete_music(path):
+    shutil.rmtree(path)
 
 bot.infinity_polling()
