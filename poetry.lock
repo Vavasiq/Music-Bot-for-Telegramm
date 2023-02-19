@@ -431,6 +431,14 @@ global = ["platformdirs (>=1.4.4)"]
 validation = ["pydantic (>=1.7.4)"]
 
 [[package]]
+name = "pytube"
+version = "12.1.2"
+description = "Python 3 library for downloading YouTube Videos."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "replit"
 version = "3.2.5"
 description = "A library for interacting with features of repl.it"
@@ -615,7 +623,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "b58224cce570b39af303cce4d4bd463221615dfd773d7765c94b501e17a95cce"
+content-hash = "953fef017126cb1fef1c6f8c45a111b03998ecb07bc18d2eed351ddd29943b88"
 
 [metadata.files]
 aiohttp = []
@@ -654,6 +662,7 @@ pyseto = []
 pytelegrambotapi = []
 python-lsp-jsonrpc = []
 pytoolconfig = []
+pytube = []
 replit = []
 replit-python-lsp-server = []
 requests = []
