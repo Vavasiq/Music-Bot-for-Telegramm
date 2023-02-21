@@ -2,7 +2,6 @@ import telebot
 import re
 from pytube import YouTube
 import shutil
-import os
 
 TOKEN = '6261451109:AAEt3IUlWpFmUfnVRl0s-pxJm_cAQ132p-k'
 bot = telebot.TeleBot(TOKEN)
